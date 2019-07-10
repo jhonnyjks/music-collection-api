@@ -1,14 +1,17 @@
 /*
  Navicat Premium Data Transfer
+
  Source Server         : localMySQL
  Source Server Type    : MySQL
  Source Server Version : 100137
  Source Host           : localhost:3306
- Source Schema         : laravel57generator
+ Source Schema         : litletask
+
  Target Server Type    : MySQL
  Target Server Version : 100137
  File Encoding         : 65001
- Date: 07/05/2019 18:55:39
+
+ Date: 10/07/2019 18:21:17
 */
 
 SET NAMES utf8mb4;
@@ -30,7 +33,7 @@ CREATE TABLE `actions`  (
   INDEX `action_id`(`id`) USING BTREE,
   INDEX `permission_id_action`(`permission_id`) USING BTREE,
   CONSTRAINT `action_fk_permission` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 39 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'Contém as ações que definem uma permissão' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 44 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'Contém as ações que definem uma permissão' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of actions
@@ -53,11 +56,47 @@ INSERT INTO `actions` VALUES (23, 6, 'permission_id', 15, '2019-05-07 21:09:42',
 INSERT INTO `actions` VALUES (24, 6, 'noun', 7, '2019-05-07 21:09:38', NULL, '2019-05-07 21:09:30');
 INSERT INTO `actions` VALUES (25, 6, 'code', 7, '2019-05-07 21:09:40', NULL, '2019-05-07 21:09:31');
 INSERT INTO `actions` VALUES (26, 1, 'last_access', 1, '2019-05-07 21:10:19', NULL, '2019-05-07 21:10:19');
-INSERT INTO `actions` VALUES (27, 12, 'user_type_id', 1, '2019-05-07 21:11:01', NULL, '2019-05-07 21:11:01');
+INSERT INTO `actions` VALUES (27, 12, 'user_type_id', 1, '2019-07-10 20:32:33', '2019-07-10 20:32:33', '2019-05-07 21:11:01');
 INSERT INTO `actions` VALUES (35, 8, 'permission_id', 7, '2019-05-07 21:36:42', NULL, '2019-05-07 21:36:37');
 INSERT INTO `actions` VALUES (36, 8, 'profile_id', 15, '2019-05-07 21:36:57', NULL, '2019-05-07 21:36:43');
 INSERT INTO `actions` VALUES (37, 8, 'priority', 7, '2019-05-07 21:36:58', NULL, '2019-05-07 21:36:45');
 INSERT INTO `actions` VALUES (38, 8, 'cpath', 7, '2019-05-07 21:36:59', NULL, '2019-05-07 21:36:50');
+INSERT INTO `actions` VALUES (39, 20, 'name', 15, '2019-07-10 20:45:22', NULL, '2019-07-10 20:45:13');
+INSERT INTO `actions` VALUES (40, 20, 'twitter', 7, '2019-07-10 20:45:20', NULL, '2019-07-10 20:45:15');
+INSERT INTO `actions` VALUES (41, 21, 'artist_id', 15, '2019-07-10 20:45:43', NULL, '2019-07-10 20:45:31');
+INSERT INTO `actions` VALUES (42, 22, 'name', 7, '2019-07-10 20:45:40', NULL, '2019-07-10 20:45:33');
+INSERT INTO `actions` VALUES (43, 23, 'year', 7, '2019-07-10 20:45:41', NULL, '2019-07-10 20:45:35');
+
+-- ----------------------------
+-- Table structure for albums
+-- ----------------------------
+DROP TABLE IF EXISTS `albums`;
+CREATE TABLE `albums`  (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID único de cada registro',
+  `artist_id` int(11) UNSIGNED NULL DEFAULT NULL COMMENT 'Artista do album',
+  `name` varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Nome do artista',
+  `year` int(4) NOT NULL COMMENT 'Ano do album',
+  `created_at` datetime(0) NOT NULL,
+  `updated_at` datetime(0) NULL DEFAULT NULL,
+  `deleted_at` datetime(0) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `album_artist_fk`(`artist_id`) USING BTREE,
+  CONSTRAINT `album_artist_fk` FOREIGN KEY (`artist_id`) REFERENCES `artists` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Table structure for artists
+-- ----------------------------
+DROP TABLE IF EXISTS `artists`;
+CREATE TABLE `artists`  (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID único de cada registro',
+  `name` varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Nome do artista',
+  `twitter` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Twitter handle',
+  `created_at` datetime(0) NOT NULL,
+  `updated_at` datetime(0) NULL DEFAULT NULL,
+  `deleted_at` datetime(0) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for oauth_access_tokens
@@ -108,6 +147,7 @@ INSERT INTO `oauth_access_tokens` VALUES ('3ab1758302a5a50636dcb2906f402681dffdf
 INSERT INTO `oauth_access_tokens` VALUES ('3f98b684bf763fbdb65d14046a7c7185448881bf0af18f244281c60564cfed6def260269452a5789', 3, 1, 1, 'Token pessoal 3', '{\"permissions\\/all\":{\"actions\":{\"_show\":15}},\"users\":{\"actions\":{\"user_type_id\":15,\"user_situation_id\":15,\"login\":15,\"name\":15,\"password\":15,\"email\":15,\"email_verified_at\":15,\"last_access\":15}}}', 0, '2019-04-22 20:08:33', '2019-04-22 20:08:33', '2019-04-22 20:38:33');
 INSERT INTO `oauth_access_tokens` VALUES ('406244df0afcecffc4ab5457e96448b080c7644257cf1f73f4ffd5fa56ce831e617fe486075ab870', 3, NULL, 1, 'Token pessoal 3', '[]', 0, '2019-04-16 13:57:18', '2019-04-16 13:57:18', '2019-04-16 14:27:18');
 INSERT INTO `oauth_access_tokens` VALUES ('41b54965aacd2890e83f2daaa95e84d13d89aa295cdb045558b139609a281acab71a9cb59c93f388', 3, 1, 1, 'Token pessoal 3', '{\"permissions\\/all\":{\"actions\":{\"_show\":15}},\"users\":{\"actions\":{\"user_type_id\":15,\"user_situation_id\":15,\"login\":15,\"name\":15,\"password\":15,\"email\":15,\"email_verified_at\":15,\"last_access\":15}},\"profiles\":{\"actions\":{\"noun\":15,\"description\":15}}}', 0, '2019-04-26 21:53:05', '2019-04-26 21:53:05', '2019-04-26 22:23:06');
+INSERT INTO `oauth_access_tokens` VALUES ('42473974aac6bcb0bb1be34f07d47293b86689007845552a3da5573bf980332531c2d7506872541f', 3, 1, 1, 'Token pessoal 3', '{\"users\":{\"actions\":{\"login\":7,\"name\":7,\"email\":7,\"user_situation_id\":7,\"email_verified_at\":1,\"password\":7,\"user_type_id\":7,\"last_access\":1},\"rules\":{\"login\":\"required_without:email|between:5,20|unique:users,login,{id}\",\"name\":\"required|string|between:6,150\",\"email\":\"required_without:login|email|unique:users,email,{id}\",\"user_situation_id\":\"integer|exists:user_situations,id\",\"email_verified_at\":\"\",\"password\":\"required|string|between:6,15\",\"user_type_id\":\"integer|exists:user_types,id\",\"last_access\":\"\"}},\"profiles\":{\"actions\":{\"noun\":7,\"description\":7},\"rules\":{\"noun\":\"required|string|between:3,20|unique:profiles,noun,{id}\",\"description\":\"required|string|between:5,200\"}},\"actions\":{\"actions\":{\"permission_id\":15,\"noun\":7,\"code\":7},\"rules\":[]},\"permissions\\/all\":{\"actions\":{\"_show\":1},\"rules\":[]},\"permissions\":{\"actions\":{\"permission_id\":7,\"profile_id\":15,\"priority\":7,\"cpath\":7},\"rules\":{\"permission_id\":\"integer|exists:permissions,id\",\"profile_id\":\"required|integer|exists:profiles,id\",\"priority\":\"required|integer|between:0,200\",\"cpath\":\"required|string\"}}}', 0, '2019-07-10 20:21:10', '2019-07-10 20:21:10', '2019-07-10 20:51:10');
 INSERT INTO `oauth_access_tokens` VALUES ('43c03ca3b816ce2bc19e106959b75c8e846b4f1c627e5669b855093d88c321d718a17560650f7370', 3, 1, 1, 'Token pessoal 3', '{\"permissions\\/all\":{\"actions\":{\"_show\":15}},\"users\":{\"actions\":{\"user_type_id\":15,\"user_situation_id\":15,\"login\":15,\"name\":15,\"password\":15,\"email\":15,\"email_verified_at\":15,\"last_access\":15}},\"profiles\":{\"actions\":{\"noun\":15,\"description\":15}},\"permissions\":{\"actions\":{\"profile_id\":15,\"permission_id\":15,\"priority\":15,\"cpath\":15}},\"actions\":{\"actions\":{\"permission_id\":15,\"noun\":15,\"code\":15}}}', 0, '2019-05-02 14:50:24', '2019-05-02 14:50:24', '2019-05-02 15:20:24');
 INSERT INTO `oauth_access_tokens` VALUES ('44c929eb5202f17529f9aee0fe8ef7c7015a4ebf5d4efadf2973e9c9d39ee00b95ee28fbca6fce5e', 3, 1, 1, 'Token pessoal 3', '{\"permissions\\/all\":{\"actions\":{\"_show\":15}},\"users\":{\"actions\":{\"user_type_id\":15,\"user_situation_id\":15,\"login\":15,\"name\":15,\"password\":15,\"email\":15,\"email_verified_at\":15,\"last_access\":15}}}', 0, '2019-04-24 17:20:22', '2019-04-24 17:20:22', '2019-04-24 17:50:22');
 INSERT INTO `oauth_access_tokens` VALUES ('4c0d3063a2a13cbe23b7948a9062a1ad211603240dbe279cb6678a039f4688c6d97cead2eb7f3973', 4, NULL, 1, 'Token pessoal 4', '[]', 0, '2019-04-24 17:07:20', '2019-04-24 17:07:20', '2019-04-24 17:37:20');
@@ -288,7 +328,7 @@ CREATE TABLE `permissions`  (
   INDEX `permission_id_permission`(`permission_id`) USING BTREE,
   INDEX `profile_id_permission`(`profile_id`) USING BTREE,
   CONSTRAINT `permission_fk_permission` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'Contém as permissões a serem vinculadas aos perfis' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'Contém as permissões a serem vinculadas aos perfis' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of permissions
@@ -299,6 +339,10 @@ INSERT INTO `permissions` VALUES (6, 1, NULL, 1, 'actions', '2019-05-07 19:02:54
 INSERT INTO `permissions` VALUES (7, 1, NULL, 1, 'permissions/all', '2019-05-07 19:05:07', NULL, '2019-05-07 19:05:07');
 INSERT INTO `permissions` VALUES (8, 1, NULL, 1, 'permissions', '2019-05-07 21:09:02', NULL, '2019-05-07 21:09:02');
 INSERT INTO `permissions` VALUES (12, 2, NULL, 1, 'users', '2019-05-07 21:11:01', NULL, '2019-05-07 21:11:01');
+INSERT INTO `permissions` VALUES (20, 2, NULL, 1, 'artists', '2019-07-10 20:29:43', NULL, '2019-07-10 20:29:43');
+INSERT INTO `permissions` VALUES (21, 2, NULL, 1, 'albums', '2019-07-10 20:45:31', NULL, '2019-07-10 20:45:31');
+INSERT INTO `permissions` VALUES (22, 2, NULL, 1, 'albums', '2019-07-10 20:45:32', NULL, '2019-07-10 20:45:32');
+INSERT INTO `permissions` VALUES (23, 2, NULL, 1, 'albums', '2019-07-10 20:45:34', NULL, '2019-07-10 20:45:34');
 
 -- ----------------------------
 -- Table structure for profiles

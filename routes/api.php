@@ -41,9 +41,15 @@ Route::get('permissions/all', [
 	'uses' => 'AuthAPIController@accessibleRoutes'
 ]);
 
+Route::resource('actions', 'ActionAPIController');
 
 Route::resource('users', 'UserAPIController');
 
 Route::resource('profiles', 'ProfileAPIController');
 
 Route::resource('permissions', 'PermissionAPIController');
+
+
+Route::resource('artists', 'ArtistAPIController');
+
+Route::resource('albums', 'AlbumAPIController');
